@@ -71,11 +71,15 @@
 
         .proches-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
-            margin: 20px 0 30px; font-family: 'Cormorant Garamond', serif;
+            margin: 20px 0 20px; font-family: 'Cormorant Garamond', serif;
             font-size: 0.95rem; line-height: 1.4; color: #555;
         }
         .proches-left { text-align: left; border-right: 1px solid #eee; padding-right: 10px; }
         .proches-right { text-align: right; padding-left: 10px; }
+
+        .pensee-section { margin-top: 25px; border-top: 1px solid rgba(184,134,11,0.1); padding-top: 15px; }
+        .pensee-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--plum-light); margin-bottom: 10px; }
+        .pensee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: #777; }
 
         .card-script { font-family: 'Great Vibes', cursive; font-size: clamp(2.5rem, 8vw, 3rem); color: var(--plum); margin: 10px 0; }
         .card-date { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-weight: 600; letter-spacing: 2px; margin: 15px 0 5px; font-size: 1.1rem; }
@@ -110,7 +114,7 @@
 <body>
 
 <div class="hero-top">
-    <img src="mairie.webp" alt="Mariage">
+    <img src="mairie.jpeg" alt="Mariage">
 </div>
 
 <button id="musicToggle">🎶</button>
@@ -149,11 +153,12 @@
     <div class="card reveal">
         <img src="houppa.png" class="card-inner-image" alt="Houppa">
         <h2 class="card-script">Houppa</h2>
+        
         <div class="proches-grid">
             <div class="proches-left">
                 Evelyne Chaouat<br>
                 Caroline Chaouat<br>
-                Jacqueline Ben Younes<br>
+                Jacqueline Benyounes<br>
                 Nathalie et Philippe Benyounes
             </div>
             <div class="proches-right">
@@ -161,8 +166,10 @@
                 Kathia Sebbah
             </div>
         </div>
-        <p class="intro-text">Ont l'immense joie de vous faire part du mariage de leurs enfants</p>
+
+        <p class="intro-text">Ont l'immense joie de vous faire part du mariage de leurs enfants et petits-enfants</p>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
+        
         <div class="couple-names-wrapper">
             <div class="name-block">
                 <span class="name-fr">Perla</span>
@@ -174,13 +181,29 @@
                 <span class="name-he">אברהם</span>
             </div>
         </div>
+        
         <p style="font-family: 'Cormorant Garamond'; margin-top: 15px; font-style: italic;">Qui aura lieu B"H</p>
         <p class="card-date">Jeudi 25 Juin 2026 à 17h00</p>
         <p style="font-family: 'Cormorant Garamond'; font-size: 1.1rem; margin-bottom: 10px;">
             Au <strong>Salon Hoche</strong><br>
             9 Avenue Hoche, 75008 Paris
         </p>
+
         <a href="https://www.waze.com/ul?q=9+Avenue+Hoche+Paris" target="_blank" class="btn-waze">Waze</a>
+
+        <div class="pensee-section">
+            <p class="pensee-title">Une tendre pensée pour nos chers grands-parents disparus</p>
+            <div class="pensee-grid">
+                <div style="text-align: left;">
+                    Grand-père Marceau<br>
+                    Raoul Chaouat
+                </div>
+                <div style="text-align: right;">
+                    Mémé Suzanne<br>
+                    Grand-père Chouchou
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card reveal">
@@ -242,12 +265,10 @@
         });
     });
 
-    // ENVOI VERS GOOGLE SHEETS
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
-
         btn.disabled = true;
         btn.innerText = "Envoi en cours...";
 
@@ -258,7 +279,7 @@
                 document.getElementById('mairiePersonnes').style.display = 'none';
                 document.getElementById('houppaPersonnes').style.display = 'none';
             })
-            .catch(error => alert("Erreur lors de l'envoi. Vérifiez votre connexion."))
+            .catch(error => alert("Erreur lors de l'envoi."))
             .finally(() => {
                 btn.disabled = false;
                 btn.innerText = "Envoyer ma réponse";
