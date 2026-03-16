@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Invitation | Perla & Sacha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fuchsia: #D82D7E;
+            --coral: #FF7F50;
+            --amber: #B8860B;
+            --soft-white: #FDFBF7;
+            --text-dark: #2c2c2c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--soft-white);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at center, #ffffff 0%, #F2EEE5 100%);
+            line-height: 1.5;
+        }
+
+        .cormorant { font-family: 'Cormorant Garamond', serif; }
+
+        /* Bouton musique */
+        #musicToggle {
+            position: fixed;
+            bottom: calc(25px + env(safe-area-inset-bottom));
+            right: 25px;
+            z-index: 99999;
+            width: 55px;
+            height: 55px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 25px rgba(216, 45, 126, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #musicToggle.playing {
+            animation: pulseMusic 2s infinite;
+            background: linear-gradient(45deg, var(--fuchsia), var(--coral));
+            color: white;
+        }
+        @keyframes pulseMusic { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        /* Header avec TON IMAGE mairie.webp */
+        header {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Utilisation de l'image demandée avec un overlay pour la lisibilité */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), var(--soft-white)), url('mairie.webp') no-repeat center center / cover;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 12vw, 5.5rem);
+            color: #fff;
+            text-shadow: 0 2px 25px rgba(0,0,0,0.6);
+            margin-bottom: 12px;
+        }
+
+        .header-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            font-style: italic;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.7);
+            letter-spacing: 1px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 650px;
+            margin: -40px auto 40px;
+            padding: 0 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Cards */
+        .wedding-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .wedding-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            border-radius: 15px 15px 0 0;
+            background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
+        }
+
+        .card-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--fuchsia);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: clamp(2rem, 7vw, 2.6rem);
+            color: var(--amber);
+            margin-bottom: 12px;
+        }
+
+        .highlight {
+            color: var(--fuchsia);
+            font-weight: 600;
+            display: block;
+            margin: 8px 0;
+            font-size: 1.2rem;
+        }
+
+        .card-body {
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* Boutons */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--fuchsia), var(--coral));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .btn-action:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--amber);
+            color: var(--amber);
+            width: auto;
+            padding: 12px 25px;
+            font-size: 0.8rem;
+            flex: 1;
+        }
+
+        /* Photo sections */
+        .image-section {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            overflow: hidden;
+            margin: 30px 0;
+        }
+        .img-verres {
+            height: 380px;
+            background: url('photo1.jpg') no-repeat center center / cover;
+        }
+        .img-lieu {
+            height: 280px;
+            background: url('photo2.jpg') no-repeat center center / cover;
+        }
+
+        /* Formulaire */
+        .rsvp-form { text-align: left; margin-top: 25px; }
+        .form-group { margin-bottom: 22px; }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #444;
+            text-transform: uppercase;
+        }
+        .required::after { content: " *"; color: var(--fuchsia); }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: #fff;
+            outline: none;
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--fuchsia); box-shadow: 0 0 0 3px rgba(216, 45, 126, 0.05); }
+
+        .people-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
+
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+        }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Pétales */
+        .petal {
+            position: fixed;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
+            border-radius: 150% 0 150% 0;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5000;
+        }
+        @keyframes fall {
+            0%   { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.8; }
+            100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; }
+        }
+
+        @media (max-width: 480px) {
+            .img-verres { height: 300px; }
+            .people-grid { grid-template-columns: 1fr; }
+            header { height: 50vh; }
+        }
+    </style>
+</head>
+<body>
+
+<button id="musicToggle">🎶</button>
+<audio id="weddingMusic" src="musique.mp3" preload="auto" loop></audio>
+
+<header>
+    <p class="header-title">Perla &amp; Sacha</p>
+</header>
+
+<div class="container">
+
+    <div class="wedding-card reveal">
+        <p class="card-type">Union Civile</p>
+        <h3 class="card-title cormorant">La Mairie</h3>
+        <div class="card-body">
+            <span class="highlight">Lundi 22 Juin 2026</span>
+            À la Mairie de <strong>LEVALLOIS-PERRET</strong><br>
+            Cérémonie à : <span style="color:var(--coral); font-weight:600;">13H30</span>
+        </div>
+        <div class="btn-group">
+            <a href="https://www.waze.com/ul?q=Mairie+de+Levallois-Perret" target="_blank" class="btn-action btn-outline">Waze</a>
+            <button onclick="addToCalendar('mairie')" class="btn-action btn-outline">Bloquer la Date</button>
+        </div>
+    </div>
+
+    <div class="image-section img-verres reveal"></div>
+
+    <div class="wedding-card reveal">
+        <p class="card-type" style="margin-bottom: 20px;">Cérémonie Religieuse</p>
+        <div style="margin: 15px 0;">
+            <p style="font-size: 1.1rem; color: var(--text-dark); line-height: 1.6; font-style: italic;" class="cormorant">
+                Nous sommes heureux, avec l'aide de D-ieu,<br>de vous convier à notre Houppa.
+            </p>
+        </div>
+        <h3 class="card-title cormorant">La Houppa</h3>
+        <div class="card-body">
+            <span class="cormorant" style="font-size: 2.5rem; color: var(--fuchsia); display: block; margin-bottom: 10px;">Perla &amp; Sacha</span>
+            <span class="highlight">Jeudi 25 Juin 2026</span>
+            <p style="margin-top: 10px;">
+                Au <strong>SALON HOCHE</strong><br>
+                Début : <span style="color:var(--coral); font-weight:600;">17H00</span>
+            </p>
+        </div>
+        <div class="btn-group">
+            <a href="https://www.waze.com/ul?q=Salon+Hoche+Paris" target="_blank" class="btn-action btn-outline">Waze</a>
+            <button onclick="addToCalendar('houppa')" class="btn-action btn-outline">Bloquer la Date</button>
+        </div>
+    </div>
+
+    <div class="wedding-card reveal">
+        <p class="card-type">Réponse souhaitée</p>
+        <h3 class="card-title cormorant">Confirmation</h3>
+        <form id="rsvpForm" class="rsvp-form">
+            <div class="form-group">
+                <label class="required">Nom &amp; Prénom</label>
+                <input type="text" name="nom_complet" required placeholder="Ex: Famille Cohen">
+            </div>
+            <hr>
+            <div class="form-group">
+                <label class="required">Serez-vous présent à la Mairie ?</label>
+                <select name="presence_mairie" id="presence_mairie" onchange="toggleMairie()" required>
+                    <option value="" disabled selected>Choisissez une option</option>
+                    <option value="oui">OUI, avec plaisir</option>
+                    <option value="non">NON, avec regret</option>
+                </select>
+            </div>
+            <div id="section_mairie" style="display:none; margin-bottom: 20px;">
+                <div class="people-grid">
+                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_mairie" min="0" value="0"></div>
+                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_mairie" min="0" value="0"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label class="required">Serez-vous présent à la Houppa ?</label>
+                <select name="presence_houppa" id="presence_houppa" onchange="toggleHouppa()" required>
+                    <option value="" disabled selected>Choisissez une option</option>
+                    <option value="oui">OUI, avec plaisir</option>
+                    <option value="non">NON, avec regret</option>
+                </select>
+            </div>
+            <div id="section_houppa" style="display:none; margin-bottom: 20px;">
+                <div class="people-grid">
+                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_houppa" min="0" value="0"></div>
+                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_houppa" min="0" value="0"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label>Un message pour les mariés ?</label>
+                <textarea name="message" rows="3" placeholder="Votre petit mot doux..."></textarea>
+            </div>
+            <button type="submit" id="submitBtn" class="btn-action">Envoyer ma réponse</button>
+        </form>
+    </div>
+
+    <div class="image-section img-lieu reveal"></div>
+
+</div>
+
+<footer>
+    <p class="cormorant" style="font-size: 1.6rem; color: var(--amber);">Hâte de célébrer avec vous</p>
+    <p style="font-size: 0.7rem; color: #aaa; margin-top: 10px; letter-spacing: 2px;">P&amp;S - 2026</p>
+</footer>
+
+<script>
+    // --- GOOGLE SHEETS (REMPLACER CI-DESSOUS) ---
+    const scriptURL = 'TON_URL_SCRIPT_GOOGLE_ICI';
+    const form = document.getElementById('rsvpForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Envoi en cours...";
+
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: new FormData(form)
+        })
+        .then(() => {
+            submitBtn.innerText = "C'est envoyé ! ✨";
+            submitBtn.style.background = "#4CAF50";
+            alert("Merci ! Votre réponse a bien été enregistrée.");
+            form.reset();
+            toggleMairie();
+            toggleHouppa();
+        })
+        .catch(error => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Réessayer l'envoi";
+            alert("Erreur lors de l'envoi.");
+        });
+    });
+
+    // --- CALENDRIER (Gestion iOS/Android) ---
+    function addToCalendar(type) {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const events = {
+            mairie: {
+                title: "Mariage Perla & Sacha - Mairie",
+                start: "20260622T133000", end: "20260622T150000",
+                location: "Mairie de Levallois-Perret",
+                description: "Cérémonie civile de Perla et Sacha.",
+                gUrl: "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Perla+%26+Sacha+-+Mairie&dates=20260622T113000Z/20260622T133000Z&details=Cérémonie+civile.&location=Mairie+de+Levallois-Perret"
+            },
+            houppa: {
+                title: "Mariage Perla & Sacha - Houppa",
+                start: "20260625T170000", end: "20260625T230000",
+                location: "Salon Hoche, Paris",
+                description: "Cérémonie religieuse et soirée.",
+                gUrl: "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Perla+%26+Sacha+-+Houppa&dates=20260625T150000Z/20260625T210000Z&details=Cérémonie+religieuse+et+soirée.&location=Salon+Hoche+Paris"
+            }
+        };
+        const ev = events[type];
+        if (isIOS) {
+            const ics = ["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT",`DTSTART:${ev.start}`,`DTEND:${ev.end}`,`SUMMARY:${ev.title}`,`DESCRIPTION:${ev.description}`,`LOCATION:${ev.location}`,"END:VEVENT","END:VCALENDAR"].join("\n");
+            const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'mariage.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            window.open(ev.gUrl, '_blank');
+        }
+    }
+
+    // --- INTERFACE ---
+    function toggleMairie() {
+        document.getElementById('section_mairie').style.display =
+            document.getElementById('presence_mairie').value === 'oui' ? 'block' : 'none';
+    }
+    function toggleHouppa() {
+        document.getElementById('section_houppa').style.display =
+            document.getElementById('presence_houppa').value === 'oui' ? 'block' : 'none';
+    }
+
+    // --- MUSIQUE ---
+    const audio = document.getElementById('weddingMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    let hasPlayed = false;
+    function attemptPlay() {
+        if (hasPlayed) return;
+        audio.play().then(() => { hasPlayed = true; musicToggle.innerText = "💖"; musicToggle.classList.add('playing'); }).catch(() => {});
+    }
+    ['click','touchstart','scroll'].forEach(evt => window.addEventListener(evt, attemptPlay, {once: true}));
+    musicToggle.addEventListener('click', e => {
+        e.stopPropagation();
+        if (audio.paused) { audio.play(); musicToggle.innerText = "💖"; musicToggle.classList.add('playing'); }
+        else { audio.pause(); musicToggle.innerText = "🎶"; musicToggle.classList.remove('playing'); }
+    });
+
+    // --- SCROLL REVEAL ---
+    function reveal() {
+        document.querySelectorAll(".reveal").forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
+        });
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
+
+    // --- PÉTALES ---
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        const size = Math.random() * 15 + 10;
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size * 1.2}px`;
+        petal.style.left = `${Math.random() * window.innerWidth}px`;
+        petal.style.top = `-20px`;
+        petal.style.setProperty('--x-end', `${(Math.random() - 0.5) * 300}px`);
+        petal.style.setProperty('--r-end', `${Math.random() * 360}deg`);
+        petal.style.animation = `fall ${Math.random() * 5 + 7}s linear forwards`;
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 10000);
+    }
+    setInterval(createPetal, 450);
+</script>
+</body>
+</html>
