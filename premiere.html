@@ -54,7 +54,7 @@
             15% { opacity: 1; transform: scale(1.1); filter: brightness(1); }
             30% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(184, 134, 11, 0.4)); }
             80% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(184, 134, 11, 0.6)); }
-            100% { opacity: 0; transform: scale(12); } /* L'effet "traversée" du logo */
+            100% { opacity: 0; transform: scale(12); }
         }
 
         .splash-fade-out {
@@ -113,10 +113,10 @@
         }
         .logo-center-overlay {
             position: absolute;
-            width: 110px; /* Agrandit le logo */
+            width: 110px;
             height: auto;
             z-index: 5;
-            top: 58%; /* Descend le logo légèrement */
+            top: 58%;
             left: 50%;
             transform: translate(-50%, -50%);
             filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
@@ -258,7 +258,7 @@
 
         <div class="papa-hommage">
             <p style="font-family: 'Cormorant Garamond'; font-size: 1.35rem; line-height: 1.5; color: var(--plum); font-style: italic;">
-                Une pensée pleine d’amour pour mon papa, qui veille sur moi, m’accompagne à chacun de mes pas et m’envoie ses bénédictions en ce moment si précieux de ma vie.
+                Une pensée pleine d'amour pour mon papa, qui veille sur moi, m'accompagne à chacun de mes pas et m'envoie ses bénédictions en ce moment si précieux de ma vie.
             </p>
             <p style="font-family: 'Montserrat'; font-size: 1.1rem; color: var(--gold); font-weight: 600; margin-top: 12px; text-transform: uppercase; letter-spacing: 1px;">
                 Jean Pierre Haïm Attal
@@ -311,11 +311,10 @@
         setTimeout(function() {
             const splash = document.getElementById('splash-screen');
             splash.classList.add('splash-fade-out');
-            
             setTimeout(function() {
                 splash.style.display = 'none';
             }, 1200); 
-        }, 5000); // Reste 5 secondes puis s'agrandit pour "entrer"
+        }, 5000);
     });
 
     function togglePersonnes(type) {
@@ -324,11 +323,38 @@
         div.style.display = (select.value === 'Oui') ? 'block' : 'none';
     }
 
+    // MUSIQUE
     const audio = document.getElementById('weddingMusic');
     const btnMusic = document.getElementById('musicToggle');
+    let musicStarted = false;
+
+    function startMusic() {
+        if (!musicStarted) {
+            audio.play().then(() => {
+                musicStarted = true;
+                btnMusic.innerText = "💖";
+            }).catch(() => {
+                // Autoplay bloqué par le navigateur, on laisse l'utilisateur cliquer
+            });
+        }
+    }
+
+    // Démarre la musique au premier scroll
+    window.addEventListener('scroll', function onFirstScroll() {
+        startMusic();
+        window.removeEventListener('scroll', onFirstScroll); // Une seule fois suffit
+    }, { passive: true });
+
+    // Bouton pour couper/relancer manuellement
     btnMusic.addEventListener('click', () => {
-        if(audio.paused) { audio.play(); btnMusic.innerText = "💖"; }
-        else { audio.pause(); btnMusic.innerText = "🎶"; }
+        if (audio.paused) {
+            audio.play();
+            musicStarted = true;
+            btnMusic.innerText = "💖";
+        } else {
+            audio.pause();
+            btnMusic.innerText = "🎶";
+        }
     });
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
