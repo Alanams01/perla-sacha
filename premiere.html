@@ -22,29 +22,23 @@
             background-color: var(--soft);
             color: var(--text);
             overflow-x: hidden;
+            padding-top: 20px;
         }
 
-        /* Hero Image */
-        .hero-top {
-            width: 100%; height: 45vh;
+        /* --- SECTION LOGO --- */
+        .main-logo-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 15px;
             background-color: var(--soft);
-            position: relative;
         }
-        .hero-top img {
-            width: 100%; height: 100%; object-fit: cover;
-            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-        }
-
-        /* Logo Header */
-        .header-logo-container {
-            text-align: center;
-            padding: 20px 0;
-            position: relative;
-        }
-        .header-logo {
-            max-width: 100px;
+        .main-logo-large {
+            max-width: 250px;
+            width: 100%;
             height: auto;
+            display: block;
         }
 
         #musicToggle {
@@ -68,7 +62,6 @@
             object-fit: cover; border-radius: 4px; display: block;
         }
 
-        /* Logo centré sur la photo Houppa */
         .houppa-image-container {
             position: relative;
             width: 100%;
@@ -76,7 +69,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* Pour garder le logo dans le cadre arrondi */
+            overflow: hidden;
             border-radius: 4px;
         }
         .logo-center-overlay {
@@ -84,7 +77,6 @@
             width: 80px;
             height: auto;
             z-index: 5;
-            /* Centrage précis */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -127,8 +119,6 @@
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
         .btn-submit { width: 100%; padding: 18px; background: var(--plum); color: white; border: none; border-radius: 4px; margin-top: 20px; cursor: pointer; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
         
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
         .sep { display: flex; align-items: center; gap: 10px; margin: 15px auto; max-width: 150px; }
         .sep span { flex: 1; height: 1px; background: var(--gold-light); opacity: 0.4; }
         .sep-diamond { width: 6px; height: 6px; background: var(--gold-light); transform: rotate(45deg); }
@@ -136,12 +126,8 @@
 </head>
 <body>
 
-<div class="hero-top">
-    <img src="mairie.jpeg" alt="Mariage">
-</div>
-
-<div class="header-logo-container">
-    <img src="logo77.png" alt="Logo" class="header-logo">
+<div class="main-logo-container">
+    <img src="logo77.png" alt="Logo Grand" class="main-logo-large">
 </div>
 
 <button id="musicToggle">🎶</button>
@@ -149,7 +135,7 @@
 
 <div class="container">
     
-    <div class="card reveal">
+    <div class="card">
         <img src="fleur.png" class="card-inner-image" alt="Fleurs">
         <h2 class="card-script">Mariage Civile</h2>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
@@ -163,7 +149,7 @@
         <a href="https://www.waze.com/ul?q=Mairie+de+Levallois-Perret" target="_blank" class="btn-waze">Waze</a>
     </div>
 
-    <div class="card reveal">
+    <div class="card">
         <div class="houppa-image-container">
             <img src="houppa.png" class="card-inner-image" alt="Houppa">
             <img src="logo77.png" alt="Logo" class="logo-center-overlay">
@@ -237,7 +223,7 @@
         </div>
     </div>
 
-    <div class="card reveal">
+    <div class="card">
         <h2 class="card-script">Réponses</h2>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <form id="rsvpForm" class="rsvp-form">
@@ -288,12 +274,6 @@
     btnMusic.addEventListener('click', () => {
         if(audio.paused) { audio.play(); btnMusic.innerText = "💖"; }
         else { audio.pause(); btnMusic.innerText = "🎶"; }
-    });
-
-    window.addEventListener('scroll', () => {
-        document.querySelectorAll('.reveal').forEach(el => {
-            if(el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
-        });
     });
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
