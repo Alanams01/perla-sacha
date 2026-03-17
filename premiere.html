@@ -36,26 +36,15 @@
             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
 
-        /* Nouveau Header Design */
-        .elegant-header {
+        /* Logo Header */
+        .header-logo-container {
             text-align: center;
-            padding: 30px 15px;
+            padding: 20px 0;
             position: relative;
         }
-        .header-monogram {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(3rem, 10vw, 4.5rem);
-            color: var(--plum);
-            line-height: 1.2;
-            text-shadow: 2px 2px 0px rgba(184, 134, 11, 0.1);
-        }
-        .header-subtext {
-            font-family: 'Cormorant Garamond', serif;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 0.8rem;
-            color: var(--gold);
-            margin-top: -10px;
+        .header-logo {
+            max-width: 100px;
+            height: auto;
         }
 
         #musicToggle {
@@ -79,7 +68,7 @@
             object-fit: cover; border-radius: 4px; display: block;
         }
 
-        /* Logo au milieu de la photo Houppa */
+        /* Logo centré sur la photo Houppa */
         .houppa-image-container {
             position: relative;
             width: 100%;
@@ -87,13 +76,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden; /* Pour garder le logo dans le cadre arrondi */
+            border-radius: 4px;
         }
         .logo-center-overlay {
             position: absolute;
-            width: 90px;
+            width: 80px;
             height: auto;
             z-index: 5;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+            /* Centrage précis */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.4));
         }
 
         .proches-grid {
@@ -145,9 +140,9 @@
     <img src="mairie.jpeg" alt="Mariage">
 </div>
 
-<header class="elegant-header">
-    <div class="header-monogram">Perla & Sacha</div>
-</header>
+<div class="header-logo-container">
+    <img src="logo77.png" alt="Logo" class="header-logo">
+</div>
 
 <button id="musicToggle">🎶</button>
 <audio id="weddingMusic" src="musique.mp3" loop></audio>
@@ -182,11 +177,11 @@
                 <p>Caroline Chaouat</p>
                 <p>Jacqueline Benyounes</p>
                 <p>Nathalie et Philippe</p>
-                <span class="famille-nom-normal">benyounes</span>
+                <span class="famille-nom-normal">Benyounes</span>
             </div>
             <div class="famille-col">
                 <p>Betty et Jean Claude</p>
-                <span class="famille-nom-normal">sebbah</span>
+                <span class="famille-nom-normal">Sebbah</span>
                 <p>Kathia Sebbah</p>
             </div>
         </div>
