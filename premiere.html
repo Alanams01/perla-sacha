@@ -61,42 +61,37 @@
 
         .intro-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: #666; margin-bottom: 15px; }
 
+        /* PRENOMS FUSIONNÉS & MAGUEN DAVID */
         .couple-names-wrapper {
-            display: flex; align-items: center; justify-content: center; gap: 20px; margin: 10px 0;
+            display: flex; align-items: center; justify-content: center; gap: 15px; margin: 25px 0;
         }
-        .name-block { display: flex; flex-direction: column; gap: 5px; }
-        .name-fr { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--plum); }
-        .name-he { font-family: 'serif'; font-size: 1.4rem; color: var(--gold-light); }
-        .ampersand-central { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--plum); font-weight: 300; }
+        .name-block { display: flex; flex-direction: column; align-items: center; gap: 2px; z-index: 2; }
+        .name-fr { font-family: 'Great Vibes', cursive; font-size: 2.4rem; color: var(--plum); line-height: 1; }
+        .name-he { font-family: 'serif'; font-size: 1.4rem; color: var(--gold-light); font-weight: 300; }
+        
+        .center-symbol-wrapper {
+            position: relative; display: flex; align-items: center; justify-content: center; width: 70px; height: 70px;
+        }
+        .ampersand-central { 
+            font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; color: var(--plum); font-weight: 300; z-index: 3;
+        }
+        .magen-david-svg {
+            position: absolute; width: 100%; height: 100%; opacity: 0.25; color: var(--gold-light); z-index: 1;
+            filter: drop-shadow(0 0 3px rgba(212, 168, 75, 0.4));
+        }
 
-        /* Alignement Face à Face des familles */
+        /* GRILLE DES FAMILLES */
         .proches-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
             margin: 20px 0; font-family: 'Cormorant Garamond', serif;
             font-size: 1.05rem; line-height: 1.6; color: #555;
         }
-        .proches-col { display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
-        .proches-left { text-align: left; border-right: 1px solid #eee; padding-right: 15px; }
-        .proches-right { text-align: right; padding-left: 15px; }
-        
-        .family-name-center { 
-            display: block; 
-            text-align: center; 
-            margin-top: 15px; 
-            font-weight: 600; 
-            color: var(--plum); 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(184,134,11,0.1);
-            padding-top: 5px;
-        }
+        .proches-left { text-align: left; }
+        .proches-right { text-align: right; }
 
         .papa-hommage {
-            margin: 25px 0 10px; padding: 25px 15px; 
-            background: rgba(184,134,11,0.04); 
-            border-top: 1px solid rgba(184,134,11,0.2);
-            border-bottom: 1px solid rgba(184,134,11,0.2);
+            margin: 25px 0 10px; padding: 25px 15px; background: rgba(184,134,11,0.04); 
+            border-top: 1px solid rgba(184,134,11,0.2); border-bottom: 1px solid rgba(184,134,11,0.2);
         }
 
         .pensee-section { margin-top: 25px; border-top: 1px solid rgba(184,134,11,0.1); padding-top: 15px; }
@@ -108,10 +103,8 @@
 
         .btn-waze {
             display: inline-flex; align-items: center; justify-content: center;
-            margin-top: 15px; padding: 10px 30px;
-            border: 1px solid var(--gold-light); border-radius: 50px;
-            color: var(--gold); text-decoration: none; font-size: 0.85rem;
-            font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+            margin-top: 15px; padding: 10px 30px; border: 1px solid var(--gold-light); border-radius: 50px;
+            color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
         }
 
         .after-mairie {
@@ -123,11 +116,9 @@
         .rsvp-form label { display: block; font-size: 0.75rem; font-weight: 600; margin: 15px 0 5px; text-transform: uppercase; color: #777; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; background: #fff; margin-bottom: 5px; }
         .btn-submit { width: 100%; padding: 18px; background: var(--plum); color: white; border: none; border-radius: 4px; margin-top: 20px; cursor: pointer; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
-        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
-
+        
         .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        
         .sep { display: flex; align-items: center; gap: 10px; margin: 15px auto; max-width: 150px; }
         .sep span { flex: 1; height: 1px; background: var(--gold-light); opacity: 0.4; }
         .sep-diamond { width: 6px; height: 6px; background: var(--gold-light); transform: rotate(45deg); }
@@ -160,6 +151,7 @@
             1 Place de la République
         </p>
         <a href="https://www.waze.com/ul?q=Mairie+de+Levallois-Perret" target="_blank" class="btn-waze">Waze</a>
+        
         <div class="after-mairie">
             <p style="font-family: 'Great Vibes'; font-size: 1.7rem; color: var(--plum-light);">After Mairie</p>
             <p style="font-family: 'Cormorant Garamond'; font-size: 1rem; margin-top: 5px;">
@@ -177,22 +169,15 @@
         <h2 class="card-script">Houppa</h2>
         
         <div class="proches-grid">
-            <div class="proches-col proches-left">
-                <div>
-                    Evelyne Chaouat<br>
-                    Caroline Chaouat<br>
-                    Jacqueline Benyounes<br>
-                    Nathalie et Philippe
-                </div>
-                <span class="family-name-center">Benyounes</span>
+            <div class="proches-left">
+                Evelyne Chaouat<br>
+                Caroline Chaouat<br>
+                Jacqueline Benyounes<br>
+                Nathalie et Philippe Benyounes
             </div>
-            <div class="proches-col proches-right">
-                <div>
-                    Betty et Jean Claude<br>
-                    Kathia Sebbah<br>
-                    <br> <br>
-                </div>
-                <span class="family-name-center">Sebbah</span>
+            <div class="proches-right">
+                Betty et Jean Claude Sebbah<br>
+                Kathia Sebbah
             </div>
         </div>
 
@@ -204,7 +189,14 @@
                 <span class="name-fr">Perla</span>
                 <span class="name-he">פרלה</span>
             </div>
-            <div class="ampersand-central">&amp;</div>
+            
+            <div class="center-symbol-wrapper">
+                <svg class="magen-david-svg" viewBox="0 0 100 100">
+                    <path fill="none" stroke="currentColor" stroke-width="3" d="M50 5 L90 75 L10 75 Z" />
+                    <path fill="none" stroke="currentColor" stroke-width="3" d="M50 95 L10 25 L90 25 Z" />
+                </svg>
+            </div>
+            
             <div class="name-block">
                 <span class="name-fr">Sacha</span>
                 <span class="name-he">אברהם</span>
