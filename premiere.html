@@ -22,17 +22,54 @@
             background-color: var(--soft);
             color: var(--text);
             overflow-x: hidden;
-            padding-top: 20px;
         }
 
-        /* --- SECTION LOGO --- */
+        /* --- SPLASH SCREEN IMMERSIF --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .splash-logo {
+            width: 70%;
+            max-width: 380px;
+            height: auto;
+            opacity: 0;
+            transform: scale(0.4);
+            animation: logoHero 5s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes logoHero {
+            0% { opacity: 0; transform: scale(0.4); filter: brightness(1.5); }
+            15% { opacity: 1; transform: scale(1.1); filter: brightness(1); }
+            30% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(184, 134, 11, 0.4)); }
+            80% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(184, 134, 11, 0.6)); }
+            100% { opacity: 0; transform: scale(12); } /* L'effet "traversée" du logo */
+        }
+
+        .splash-fade-out {
+            opacity: 0;
+            pointer-events: none;
+            background: transparent !important;
+        }
+
+        /* --- LOGO HAUT DE PAGE --- */
         .main-logo-container {
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 40px 15px;
-            background-color: var(--soft);
         }
         .main-logo-large {
             max-width: 250px;
@@ -41,6 +78,7 @@
             display: block;
         }
 
+        /* --- BOUTON MUSIQUE --- */
         #musicToggle {
             position: fixed; bottom: 25px; right: 20px; z-index: 9999;
             width: 52px; height: 52px; background: white;
@@ -62,6 +100,7 @@
             object-fit: cover; border-radius: 4px; display: block;
         }
 
+        /* --- MODIFICATION LOGO HOUPPA --- */
         .houppa-image-container {
             position: relative;
             width: 100%;
@@ -74,15 +113,16 @@
         }
         .logo-center-overlay {
             position: absolute;
-            width: 80px;
+            width: 110px; /* Agrandit le logo */
             height: auto;
             z-index: 5;
-            top: 50%;
+            top: 58%; /* Descend le logo légèrement */
             left: 50%;
             transform: translate(-50%, -50%);
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.4));
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
         }
 
+        /* --- TEXTES & GRILLES --- */
         .proches-grid {
             display: flex;
             justify-content: space-between;
@@ -104,7 +144,6 @@
         .name-he { font-family: 'serif'; font-size: 1.5rem; color: var(--gold-light); }
         .magen-david-mini { width: 24px; height: 24px; opacity: 0.7; color: var(--gold-light); }
 
-        .intro-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: #666; margin-bottom: 15px; }
         .card-script { font-family: 'Great Vibes', cursive; font-size: clamp(2.5rem, 8vw, 3rem); color: var(--plum); margin: 10px 0; }
         .card-date { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-weight: 600; letter-spacing: 2px; margin: 15px 0 5px; font-size: 1.1rem; }
         .btn-waze { display: inline-flex; align-items: center; justify-content: center; margin-top: 15px; padding: 10px 30px; border: 1px solid var(--gold-light); border-radius: 50px; color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
@@ -126,6 +165,10 @@
 </head>
 <body>
 
+<div id="splash-screen">
+    <img src="logo77.png" alt="Logo de Bienvenue" class="splash-logo">
+</div>
+
 <div class="main-logo-container">
     <img src="logo77.png" alt="Logo Grand" class="main-logo-large">
 </div>
@@ -137,7 +180,7 @@
     
     <div class="card">
         <img src="fleur.png" class="card-inner-image" alt="Fleurs">
-        <h2 class="card-script">Mariage Civile</h2>
+        <h2 class="card-script">Mariage Civil</h2>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <p class="name-fr">Perla & Sacha</p>
         <p style="font-family: 'Cormorant Garamond'; margin: 10px 0; color: var(--plum-light); font-size: 1.2rem;">Se diront "OUI" à la mairie de Levallois</p>
@@ -159,20 +202,20 @@
         
         <div class="proches-grid">
             <div class="famille-col">
+                <p>Betty et Jean Claude</p>
+                <span class="famille-nom-normal">Sebbah</span>
+                <p>Kathia Sebbah</p>
+            </div>
+            <div class="famille-col">
                 <p>Evelyne Chaouat</p>
                 <p>Caroline Chaouat</p>
                 <p>Jacqueline Benyounes</p>
                 <p>Nathalie et Philippe</p>
                 <span class="famille-nom-normal">Benyounes</span>
             </div>
-            <div class="famille-col">
-                <p>Betty et Jean Claude</p>
-                <span class="famille-nom-normal">Sebbah</span>
-                <p>Kathia Sebbah</p>
-            </div>
         </div>
 
-        <p class="intro-text">Ont l'immense joie de vous faire part du mariage de leurs petits-enfants et enfants</p>
+        <p style="font-family: 'Cormorant Garamond'; font-style: italic; font-size: 1.1rem; color: #666; margin-bottom: 15px;">Ont l'immense joie de vous faire part du mariage de leurs petits-enfants et enfants</p>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         
         <div class="couple-names-wrapper">
@@ -231,7 +274,7 @@
             <input type="text" name="nom" required>
             <label>Prénom</label>
             <input type="text" name="prenom" required>
-            <label>Présence au Mariage Civile ?</label>
+            <label>Présence au Mariage Civil ?</label>
             <select name="mairie" id="mairieSelect" onchange="togglePersonnes('mairie')" required>
                 <option value="">Sélectionnez...</option>
                 <option value="Oui">OUI</option>
@@ -263,6 +306,18 @@
 </footer>
 
 <script>
+    // GESTION DU SPLASH SCREEN
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const splash = document.getElementById('splash-screen');
+            splash.classList.add('splash-fade-out');
+            
+            setTimeout(function() {
+                splash.style.display = 'none';
+            }, 1200); 
+        }, 5000); // Reste 5 secondes puis s'agrandit pour "entrer"
+    });
+
     function togglePersonnes(type) {
         const select = document.getElementById(type + 'Select');
         const div = document.getElementById(type + 'Personnes');
