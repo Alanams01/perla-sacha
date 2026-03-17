@@ -35,6 +35,16 @@
             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
 
+        /* NOUVEAU STYLE POUR LE LOGO PRINCIPAL */
+        .main-logo {
+            display: block;
+            max-width: 120px; /* Ajustez la taille selon vos désirs */
+            height: auto;
+            margin: 20px auto 0 auto; /* Espace en haut et centré horizontalement */
+            position: relative;
+            z-index: 15; /* Pour être sûr qu'il soit au-dessus */
+        }
+
         #musicToggle {
             position: fixed; bottom: 25px; right: 20px; z-index: 9999;
             width: 52px; height: 52px; background: white;
@@ -43,7 +53,8 @@
             font-size: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        header { text-align: center; margin-top: -40px; position: relative; z-index: 10; padding-bottom: 20px; }
+        /* Ajustement de la marge du header suite à l'ajout du logo */
+        header { text-align: center; margin-top: 10px; position: relative; z-index: 10; padding-bottom: 20px; }
         .header-monogram { font-family: 'Great Vibes', cursive; font-size: clamp(3.5rem, 12vw, 5rem); color: var(--plum); }
 
         .container { max-width: 600px; margin: 0 auto; padding: 0 15px 60px; }
@@ -86,14 +97,21 @@
             margin: 20px 0; font-family: 'Cormorant Garamond', serif;
             font-size: 1.05rem; line-height: 1.6; color: #555;
         }
+        .proches-col { display: flex; flex-direction: column; justify-content: space-between; }
         .proches-left { text-align: left; }
         .proches-right { text-align: right; }
 
+        .family-name-sub { 
+            display: block; text-align: center; margin-top: 12px; font-weight: 600; 
+            color: var(--plum); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;
+            border-top: 1px solid rgba(184,134,11,0.1); padding-top: 5px;
+        }
+
+        /* ----- AUTRES SECTIONS ----- */
         .papa-hommage {
             margin: 25px 0 10px; padding: 25px 15px; background: rgba(184,134,11,0.04); 
             border-top: 1px solid rgba(184,134,11,0.2); border-bottom: 1px solid rgba(184,134,11,0.2);
         }
-
         .pensee-section { margin-top: 25px; border-top: 1px solid rgba(184,134,11,0.1); padding-top: 15px; }
         .pensee-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--plum-light); margin-bottom: 10px; }
         .pensee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: #777; }
@@ -130,12 +148,12 @@
     <img src="mairie.jpeg" alt="Mariage">
 </div>
 
+<img src="logo77.png" alt="Logo" class="main-logo">
+
 <button id="musicToggle">🎶</button>
 <audio id="weddingMusic" src="musique.mp3" loop></audio>
 
-<header>
-    <div class="header-monogram">Perla &amp; Sacha</div>
-</header>
+
 
 <div class="container">
     
@@ -169,15 +187,22 @@
         <h2 class="card-script">Houppa</h2>
         
         <div class="proches-grid">
-            <div class="proches-left">
-                Evelyne Chaouat<br>
-                Caroline Chaouat<br>
-                Jacqueline Benyounes<br>
-                Nathalie et Philippe Benyounes
+            <div class="proches-col proches-left">
+                <div>
+                    Evelyne Chaouat<br>
+                    Caroline Chaouat<br>
+                    Jacqueline Benyounes<br>
+                    Nathalie et Philippe
+                </div>
+                <span class="family-name-sub">Benyounes</span>
             </div>
-            <div class="proches-right">
-                Betty et Jean Claude Sebbah<br>
-                Kathia Sebbah
+            <div class="proches-col proches-right">
+                <div>
+                    Betty et Jean Claude<br>
+                    Kathia Sebbah<br>
+                    <br>
+                </div>
+                <span class="family-name-sub">Sebbah</span>
             </div>
         </div>
 
