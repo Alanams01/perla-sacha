@@ -277,47 +277,44 @@
     }
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const btnSubmit = document.getElementById('submitBtn');
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
-        
-        btnSubmit.disabled = true;
-        btnSubmit.innerText = "Envoi en cours...";
+    e.preventDefault();
+    const btnSubmit = document.getElementById('submitBtn');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
+    
+    btnSubmit.disabled = true;
+    btnSubmit.innerText = "Envoi en cours...";
 
-        // On lit les valeurs directement par ID pour éviter tout problème avec les champs cachés
-        const nom      = document.getElementById('rsvpForm').querySelector('[name="nom"]').value || '';
-        const prenom   = document.getElementById('rsvpForm').querySelector('[name="prenom"]').value || '';
-        const mairie   = document.getElementById('mairieSelect').value || 'Non';
-        const nb_mairie  = document.getElementById('nb_mairie')  ? document.getElementById('nb_mairie').value  : '0';
-        const houppa   = document.getElementById('houppaSelect').value || 'Non';
-        const nb_houppa  = document.getElementById('nb_houppa')  ? document.getElementById('nb_houppa').value  : '0';
-        const nb_soiree  = document.getElementById('nb_soiree')  ? document.getElementById('nb_soiree').value  : '0';
-        const message  = document.getElementById('rsvpForm').querySelector('[name="message"]').value || '';
+    // Récupération manuelle pour être CERTAIN des valeurs
+    const params = new URLSearchParams();
+    params.append('nom', document.getElementsByName('nom')[0].value);
+    params.append('prenom', document.getElementsByName('prenom')[0].value);
+    params.append('mairie', document.getElementById('mairieSelect').value);
+    params.append('nb_mairie', document.getElementById('nb_mairie') ? document.getElementById('nb_mairie').value : '0');
+    params.append('houppa', document.getElementById('houppaSelect').value);
+    params.append('nb_houppa', document.getElementById('nb_houppa') ? document.getElementById('nb_houppa').value : '0');
+    params.append('nb_soiree', document.getElementById('nb_soiree') ? document.getElementById('nb_soiree').value : '0');
+    params.append('message', document.getElementsByName('message')[0].value);
 
-        // On envoie via FormData construit manuellement — toujours tous les champs
-        const formData = new FormData();
-        formData.append('nom',       nom);
-        formData.append('prenom',    prenom);
-        formData.append('mairie',    mairie);
-        formData.append('nb_mairie', nb_mairie || '0');
-        formData.append('houppa',    houppa);
-        formData.append('nb_houppa', nb_houppa || '0');
-        formData.append('nb_soiree', nb_soiree || '0');
-        formData.append('message',   message);
-
-        fetch(scriptURL, { method: 'POST', body: formData })
-        .then(() => {
-            alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
-            this.reset();
-            document.getElementById('mairieDetails').style.display = 'none';
-            document.getElementById('houppaDetails').style.display = 'none';
-        })
-        .catch(() => alert("Erreur lors de l'envoi."))
-        .finally(() => {
-            btnSubmit.disabled = false;
-            btnSubmit.innerText = "Envoyer ma réponse";
-        });
+    fetch(scriptURL, { 
+        method: 'POST', 
+        mode: 'no-cors', 
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString() 
+    })
+    .then(() => {
+        alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
+        this.reset();
+        btnSubmit.disabled = false;
+        btnSubmit.innerText = "Envoyer ma réponse";
+        document.getElementById('mairieDetails').style.display = 'none';
+        document.getElementById('houppaDetails').style.display = 'none';
+    })
+    .catch(() => {
+        alert("Erreur lors de l'envoi.");
+        btnSubmit.disabled = false;
+        btnSubmit.innerText = "Envoyer ma réponse";
     });
+});
 </script>
 </body>
 </html>
