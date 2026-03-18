@@ -24,6 +24,7 @@
             overflow-x: hidden;
         }
 
+        /* --- SPLASH SCREEN --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -33,41 +34,28 @@
             align-items: center;
             z-index: 10000;
             transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-            overflow: hidden;
         }
 
         .splash-logo {
             width: 70%;
             max-width: 380px;
-            height: auto;
             opacity: 0;
             transform: scale(0.4);
             animation: logoHero 5s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         @keyframes logoHero {
-            0% { opacity: 0; transform: scale(0.4); filter: brightness(1.5); }
-            15% { opacity: 1; transform: scale(1.1); filter: brightness(1); }
-            30% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(184, 134, 11, 0.4)); }
-            80% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(184, 134, 11, 0.6)); }
+            0% { opacity: 0; transform: scale(0.4); }
+            15% { opacity: 1; transform: scale(1.1); }
+            80% { opacity: 1; transform: scale(1.1); }
             100% { opacity: 0; transform: scale(12); } 
         }
 
         .splash-fade-out { opacity: 0; pointer-events: none; }
 
-        .main-logo-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 15px;
-        }
-        .main-logo-large {
-            max-width: 320px;
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        /* --- LAYOUT --- */
+        .main-logo-container { width: 100%; display: flex; justify-content: center; padding: 40px 15px; }
+        .main-logo-large { max-width: 320px; width: 100%; height: auto; }
 
         #music-control {
             position: fixed; bottom: 20px; right: 20px;
@@ -78,9 +66,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.25);
             cursor: pointer; z-index: 9999;
             border: 2px solid white;
-            opacity: 0.9;
         }
-        #music-control svg { transition: transform 0.3s; }
         #music-control.playing svg { animation: spinMusic 4s linear infinite; }
         @keyframes spinMusic { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -88,54 +74,41 @@
 
         .card {
             background: #fff; border-radius: 8px; padding: 25px 20px; 
-            text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             border: 1px solid rgba(184,134,11,0.1); margin-bottom: 40px;
         }
 
-        .card-inner-image { width: 100%; height: auto; max-height: 300px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 20px; }
-
-        .after-mairie { 
-            background: rgba(184,134,11,0.03); 
-            border: 1px dashed var(--gold-light); 
-            padding: 15px; margin-top: 25px; border-radius: 4px; 
-        }
-
-        .houppa-image-container {
-            position: relative; width: 100%; margin-bottom: 25px;
-            display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 4px;
-        }
-        .logo-center-overlay {
-            position: absolute; width: 110px; z-index: 5; top: 58%; left: 50%;
-            transform: translate(-50%, -50%); filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
-        }
-
-        .proches-grid {
-            display: flex; justify-content: space-between; margin: 20px 0 30px;
-            font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #444;
-        }
-        .famille-col { width: 48%; display: flex; flex-direction: column; text-align: center; }
-
-        .couple-names-wrapper { display: flex; flex-direction: column; align-items: center; gap: 5px; margin: 25px 0; }
-        .names-fr-row { display: flex; align-items: center; justify-content: center; gap: 15px; }
-        .name-fr { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--plum); line-height: 1; }
-        .ampersand-fr { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--plum); }
-        
-        .names-he-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 5px; }
-        .name-he { font-family: 'serif'; font-size: 1.5rem; color: var(--gold-light); }
-        .magen-david-mini { width: 24px; height: 24px; opacity: 0.7; color: var(--gold-light); }
+        .card-inner-image { width: 100%; border-radius: 4px; margin-bottom: 20px; }
 
         .card-script { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--plum); margin: 10px 0; }
         .card-date { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-weight: 600; letter-spacing: 2px; margin: 15px 0 5px; font-size: 1.1rem; }
-        .btn-waze { display: inline-flex; align-items: center; justify-content: center; margin-top: 15px; padding: 10px 30px; border: 1px solid var(--gold-light); border-radius: 50px; color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
         
+        .name-fr { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--plum); line-height: 1; }
+        .ampersand-fr { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--plum); }
+        .name-he { font-family: serif; font-size: 1.5rem; color: var(--gold-light); }
+
+        .btn-waze { 
+            display: inline-flex; align-items: center; margin-top: 15px; padding: 10px 30px; 
+            border: 1px solid var(--gold-light); border-radius: 50px; color: var(--gold); 
+            text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; 
+        }
+
+        .after-mairie { 
+            background: rgba(184,134,11,0.03); border: 1px dashed var(--gold-light); 
+            padding: 15px; margin-top: 25px; border-radius: 4px; 
+        }
+
+        .proches-grid { display: flex; justify-content: space-between; margin: 20px 0 30px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #444; }
+        .famille-col { width: 48%; text-align: center; }
+
         .papa-hommage { margin: 25px 0 10px; padding: 20px 15px; background: rgba(184,134,11,0.04); border-top: 1px solid rgba(184,134,11,0.2); border-bottom: 1px solid rgba(184,134,11,0.2); }
         .pensee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: #777; margin-top: 10px; }
-        
+
         .rsvp-form { text-align: left; padding: 0 10px; }
         .rsvp-form label { display: block; font-size: 0.75rem; font-weight: 600; margin: 15px 0 5px; text-transform: uppercase; color: #777; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; margin-bottom: 10px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
         .btn-submit { width: 100%; padding: 18px; background: var(--plum); color: white; border: none; border-radius: 4px; margin-top: 20px; cursor: pointer; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-        
+
         .sep { display: flex; align-items: center; gap: 10px; margin: 15px auto; max-width: 150px; }
         .sep span { flex: 1; height: 1px; background: var(--gold-light); opacity: 0.4; }
         .sep-diamond { width: 6px; height: 6px; background: var(--gold-light); transform: rotate(45deg); }
@@ -143,20 +116,12 @@
 </head>
 <body>
 
-<div id="splash-screen">
-    <img src="logo77.png" alt="Logo" class="splash-logo">
-</div>
-
-<div class="main-logo-container">
-    <img src="logo77.png" alt="Logo Grand" class="main-logo-large">
-</div>
+<div id="splash-screen"><img src="logo77.png" alt="Logo" class="splash-logo"></div>
+<div class="main-logo-container"><img src="logo77.png" alt="Logo Grand" class="main-logo-large"></div>
 
 <div id="music-control" onclick="toggleMusic()">
-    <svg viewBox="0 0 24 24" width="22" fill="white">
-        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" width="22" fill="white"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
 </div>
-
 <audio id="weddingMusic" src="musique.mp3" loop></audio>
 
 <div class="container">
@@ -166,59 +131,46 @@
         <h2 class="card-script">Mariage Civil</h2>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <p class="name-fr">Perla & Sacha</p>
-        <p style="font-family: 'Cormorant Garamond'; margin: 10px 0; color: var(--plum-light); font-size: 1.2rem;">Se diront "OUI" à la mairie de Levallois</p>
         <p class="card-date">Lundi 22 Juin 2026 à 13h30</p>
         <p>Mairie de <strong>Levallois-Perret</strong><br>1 Place de la République</p>
         <a href="https://www.waze.com/ul?q=Mairie+de+Levallois-Perret" target="_blank" class="btn-waze">Waze</a>
         
         <div class="after-mairie">
             <p style="font-family: 'Great Vibes'; font-size: 1.7rem; color: var(--plum-light);">After Mairie</p>
-            <p style="font-family: 'Cormorant Garamond'; font-size: 1rem; margin-top: 5px;">
+            <p style="font-family: 'Cormorant Garamond'; font-size: 1rem;">
                 <strong>Pavillon des Fêtes de Levallois</strong><br>
                 1 Place de Verdun — 92300 Levallois-Perret
             </p>
-            <p style="font-size: 0.85rem; color: var(--gold); margin-top: 8px; font-style: italic;">
-                L'After Mairie est situé à seulement 5 minutes à pied de la Mairie.
-            </p>
+            <p style="font-size: 0.85rem; color: var(--gold); margin-top: 8px; font-style: italic;">L'After Mairie est situé à seulement 5 minutes à pied de la Mairie.</p>
         </div>
     </div>
 
     <div class="card">
-        <div class="houppa-image-container">
-            <img src="houppa.png" class="card-inner-image">
-            <img src="logo77.png" alt="Logo" class="logo-center-overlay">
-        </div>
+        <img src="houppa.png" class="card-inner-image">
         <h2 class="card-script">Houppa</h2>
         <div class="proches-grid">
             <div class="famille-col">
-                <p>Betty et Jean Claude</p>
-                <span style="font-weight: 500;">Sebbah</span>
+                <p>Betty et Jean Claude Sebbah</p>
                 <p>Kathia Sebbah</p>
             </div>
             <div class="famille-col">
                 <p>Evelyne Chaouat</p>
                 <p>Caroline Chaouat</p>
                 <p>Jacqueline Benyounes</p>
-                <p>Nathalie et Philippe</p>
-                <span style="font-weight: 500;">Benyounes</span>
+                <p>Nathalie et Philippe Benyounes</p>
             </div>
         </div>
-        <p style="font-family: 'Cormorant Garamond'; font-style: italic; font-size: 1.1rem; color: #666; margin-bottom: 15px;">Ont l'immense joie de vous faire part du mariage de leurs petits-enfants et enfants</p>
+        
+        <p style="font-family: 'Cormorant Garamond'; font-style: italic; color: #666; margin-bottom: 15px;">Ont l'immense joie de vous faire part du mariage de leurs petits-enfants et enfants</p>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         
-        <div class="couple-names-wrapper">
-            <div class="names-fr-row"><span class="name-fr">Perla</span><span class="ampersand-fr">&amp;</span><span class="name-fr">Sacha</span></div>
-            <div class="names-he-row">
-                <span class="name-he">פרלה</span>
-                <svg class="magen-david-mini" viewBox="0 0 100 100">
-                    <path fill="none" stroke="currentColor" stroke-width="6" d="M50 5 L90 75 L10 75 Z" />
-                    <path fill="none" stroke="currentColor" stroke-width="6" d="M50 95 L10 25 L90 25 Z" />
-                </svg>
-                <span class="name-he">אברהם</span>
-            </div>
+        <p class="name-fr">Perla & Sacha</p>
+        <div style="margin: 10px 0;">
+            <span class="name-he">פרלה</span> 
+            <span style="color:var(--gold-light); margin:0 10px;">✡</span>
+            <span class="name-he">אברהם</span>
         </div>
-        
-        <p style="font-family: 'Cormorant Garamond'; margin-top: 15px; font-style: italic;">Qui aura lieu B"H</p>
+
         <p class="card-date">Jeudi 25 Juin 2026 à 17h00</p>
         <p>Aux <strong>Salons Hoche</strong><br>9 Avenue Hoche, 75008 Paris</p>
         <p style="font-family: 'Cormorant Garamond'; font-size: 1.1rem; color: var(--plum-light); margin-top: 10px; font-weight: 500;">La cérémonie religieuse sera suivie d'une réception</p>
@@ -232,6 +184,7 @@
                 <div style="text-align: right;">Grand-père Marceau<br>Raoul</div>
             </div>
         </div>
+
         <div class="papa-hommage">
             <p style="font-family: 'Cormorant Garamond'; font-size: 1.35rem; line-height: 1.5; color: var(--plum); font-style: italic;">Une pensée pleine d'amour pour mon papa, qui veille sur moi, m'accompagne à chacun de mes pas et m'envoie ses bénédictions en ce moment si précieux de ma vie.</p>
             <p style="font-family: 'Montserrat'; font-size: 1.1rem; color: var(--gold); font-weight: 600; margin-top: 12px; text-transform: uppercase;">Jean Pierre Haïm Attal</p>
@@ -242,39 +195,33 @@
         <h2 class="card-script">Réponses</h2>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <form id="rsvpForm" class="rsvp-form">
-            <label>Nom</label>
-            <input type="text" name="nom" autocomplete="family-name" required>
-
-            <label>Prénom</label>
-            <input type="text" name="prenom" autocomplete="given-name" required>
+            <label>Nom</label><input type="text" name="nom" required>
+            <label>Prénom</label><input type="text" name="prenom" required>
             
             <label>Présence au Mariage Civil ?</label>
-            <select name="mairie" id="mairieSelect" onchange="toggleMairieFields()" required>
-                <option value="">Sélectionnez...</option>
-                <option value="Oui">OUI</option>
-                <option value="Non">NON</option>
+            <select name="mairie" id="mairieSelect" onchange="toggleFields('mairie')" required>
+                <option value="Non">NON</option><option value="Oui">OUI</option>
             </select>
-            <div id="mairieDetails" style="display:none;">
+            <div id="mairieDetails" style="display:none; margin-top:10px;">
                 <label>Nombre de personnes (Mairie)</label>
                 <input type="number" name="nb_mairie" min="0" value="0">
             </div>
 
             <label>Présence à la Houppa ?</label>
-            <select name="houppa" id="houppaSelect" onchange="toggleHouppaFields()" required>
-                <option value="">Sélectionnez...</option>
-                <option value="Oui">OUI</option>
-                <option value="Non">NON</option>
+            <select name="houppa" id="houppaSelect" onchange="toggleFields('houppa')" required>
+                <option value="Non">NON</option><option value="Oui">OUI</option>
             </select>
-            
-            <div id="houppaDetails" style="display:none;">
+            <div id="houppaDetails" style="display:none; margin-top:10px;">
                 <label>Nombre de personnes (Houppa)</label>
                 <input type="number" name="nb_houppa" min="0" value="0">
-                
-                <label>Nombre de personnes (Soirée)</label>
-                <input type="number" name="nb_soiree" min="0" value="0">
             </div>
 
-            <label>Un petit mot pour nous ?</label><textarea name="message" rows="3"></textarea>
+            <label>Nombre de personnes (Soirée)</label>
+            <input type="number" name="nb_soiree" min="0" value="0">
+
+            <label>Un petit mot pour nous ?</label>
+            <textarea name="message" rows="3"></textarea>
+
             <button type="submit" id="submitBtn" class="btn-submit">Envoyer ma réponse</button>
         </form>
     </div>
@@ -283,87 +230,60 @@
 <footer style="text-align: center; padding-bottom: 60px; font-family: 'Great Vibes'; font-size: 2.2rem; color: var(--gold);">Hâte de vous retrouver !</footer>
 
 <script>
-    window.addEventListener('load', function() {
-        setTimeout(function() {
+    window.addEventListener('load', () => {
+        setTimeout(() => {
             const splash = document.getElementById('splash-screen');
             splash.classList.add('splash-fade-out');
-            setTimeout(function() { splash.style.display = 'none'; }, 1200); 
-        }, 5000); 
+            setTimeout(() => splash.style.display = 'none', 1200);
+        }, 4000);
     });
 
-    let audioStarted = false;
     const audio = document.getElementById('weddingMusic');
     const btn = document.getElementById('music-control');
-
-    const startAudio = () => {
-        if (!audioStarted) {
-            audio.play().then(() => {
-                audioStarted = true;
-                btn.classList.add('playing');
-                window.removeEventListener('scroll', startAudio);
-                window.removeEventListener('touchstart', startAudio);
-                window.removeEventListener('touchmove', startAudio);
-            }).catch(() => {});
-        }
-    };
-
-    window.addEventListener('scroll', startAudio, { passive: true });
-    window.addEventListener('touchstart', startAudio, { passive: true });
-    window.addEventListener('touchmove', startAudio, { passive: true });
-
     function toggleMusic() {
-        if (audio.paused) {
-            audio.play();
-            btn.classList.add('playing');
-            audioStarted = true;
-        } else {
-            audio.pause();
-            btn.classList.remove('playing');
-        }
+        if (audio.paused) { audio.play(); btn.classList.add('playing'); }
+        else { audio.pause(); btn.classList.remove('playing'); }
     }
 
-    function toggleMairieFields() {
-        const select = document.getElementById('mairieSelect');
-        const details = document.getElementById('mairieDetails');
-        details.style.display = (select.value === 'Oui') ? 'block' : 'none';
-    }
-
-    function toggleHouppaFields() {
-        const select = document.getElementById('houppaSelect');
-        const details = document.getElementById('houppaDetails');
-        details.style.display = (select.value === 'Oui') ? 'block' : 'none';
+    function toggleFields(type) {
+        const val = document.getElementById(type + 'Select').value;
+        document.getElementById(type + 'Details').style.display = (val === 'Oui') ? 'block' : 'none';
     }
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const btn2 = document.getElementById('submitBtn');
+        const btnSubmit = document.getElementById('submitBtn');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
         
-        btn2.disabled = true;
-        btn2.innerText = "Envoi en cours...";
+        btnSubmit.disabled = true;
+        btnSubmit.innerText = "Envoi en cours...";
 
-        // Construire manuellement les données pour s'assurer que tous les champs sont toujours envoyés
-        const formData = new FormData(this);
+        const fd = new FormData(this);
+        const params = new URLSearchParams();
+        params.append('nom', fd.get('nom'));
+        params.append('prenom', fd.get('prenom'));
+        params.append('mairie', fd.get('mairie'));
+        params.append('nb_mairie', fd.get('nb_mairie') || "0");
+        params.append('houppa', fd.get('houppa'));
+        params.append('nb_houppa', fd.get('nb_houppa') || "0");
+        params.append('nb_soiree', fd.get('nb_soiree') || "0");
+        params.append('message', fd.get('message') || "");
 
-        // Forcer les champs cachés à 0 s'ils sont absents (évite le décalage de colonnes)
-        if (!formData.get('nb_mairie')) formData.set('nb_mairie', '0');
-        if (!formData.get('nb_houppa')) formData.set('nb_houppa', '0');
-        if (!formData.get('nb_soiree')) formData.set('nb_soiree', '0');
-        
-        fetch(scriptURL, { method: 'POST', body: formData })
-            .then(() => {
-                alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
-                this.reset();
-                document.getElementById('mairieDetails').style.display = 'none';
-                document.getElementById('houppaDetails').style.display = 'none';
-            })
-            .catch(() => alert("Erreur lors de l'envoi."))
-            .finally(() => {
-                btn2.disabled = false;
-                btn2.innerText = "Envoyer ma réponse";
-            });
+        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: params.toString() })
+        .then(() => {
+            alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
+            this.reset();
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = "Envoyer ma réponse";
+            document.getElementById('mairieDetails').style.display = 'none';
+            document.getElementById('houppaDetails').style.display = 'none';
+        })
+        .catch(() => {
+            alert("Erreur lors de l'envoi.");
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = "Envoyer ma réponse";
+        });
     });
 </script>
-
 </body>
 </html>
