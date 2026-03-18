@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* --- SPLASH SCREEN --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -53,7 +52,6 @@
 
         .splash-fade-out { opacity: 0; pointer-events: none; }
 
-        /* --- LAYOUT --- */
         .main-logo-container { width: 100%; display: flex; justify-content: center; padding: 40px 15px; }
         .main-logo-large { max-width: 320px; width: 100%; height: auto; }
 
@@ -190,29 +188,33 @@
         <h2 class="card-script">Réponses</h2>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <form id="rsvpForm" class="rsvp-form">
-            <label>Nom</label><input type="text" name="nom" required>
-            <label>Prénom</label><input type="text" name="prenom" required>
+            <label>Nom</label>
+            <input type="text" name="nom" autocomplete="family-name" required>
+
+            <label>Prénom</label>
+            <input type="text" name="prenom" autocomplete="given-name" required>
             
             <label>Présence au Mariage Civil ?</label>
             <select name="mairie" id="mairieSelect" onchange="toggleMairie()" required>
-                <option value="Non">NON</option><option value="Oui">OUI</option>
+                <option value="Non">NON</option>
+                <option value="Oui">OUI</option>
             </select>
             <div id="mairieDetails" style="display:none; margin-top:10px;">
                 <label>Nombre de personnes (Mairie)</label>
-                <input type="number" name="nb_mairie" min="0" value="0">
+                <input type="number" name="nb_mairie" id="nb_mairie" min="0" value="0">
             </div>
 
             <label>Présence à la Houppa ?</label>
             <select name="houppa" id="houppaSelect" onchange="toggleHouppa()" required>
-                <option value="Non">NON</option><option value="Oui">OUI</option>
+                <option value="Non">NON</option>
+                <option value="Oui">OUI</option>
             </select>
-            
+            <!-- nb_houppa ET nb_soiree apparaissent ensemble quand Houppa = Oui -->
             <div id="houppaDetails" style="display:none; margin-top:10px;">
                 <label>Nombre de personnes (Houppa)</label>
-                <input type="number" name="nb_houppa" min="0" value="0">
-                
+                <input type="number" name="nb_houppa" id="nb_houppa" min="0" value="0">
                 <label style="margin-top:15px;">Nombre de personnes (Soirée)</label>
-                <input type="number" name="nb_soiree" min="0" value="0">
+                <input type="number" name="nb_soiree" id="nb_soiree" min="0" value="0">
             </div>
 
             <label>Un petit mot pour nous ?</label>
@@ -225,7 +227,6 @@
 <footer style="text-align: center; padding-bottom: 60px; font-family: 'Great Vibes'; font-size: 2.2rem; color: var(--gold);">Hâte de vous retrouver !</footer>
 
 <script>
-    // Splash Screen
     window.addEventListener('load', () => {
         setTimeout(() => {
             const splash = document.getElementById('splash-screen');
@@ -234,7 +235,6 @@
         }, 4000);
     });
 
-    // --- MUSIQUE AVEC ACTION SCROLL/TOUCH ---
     let audioStarted = false;
     const audio = document.getElementById('weddingMusic');
     const btn = document.getElementById('music-control');
@@ -244,7 +244,6 @@
             audio.play().then(() => {
                 audioStarted = true;
                 btn.classList.add('playing');
-                // Nettoyage des listeners
                 window.removeEventListener('scroll', startAudio);
                 window.removeEventListener('touchstart', startAudio);
                 window.removeEventListener('click', startAudio);
@@ -267,7 +266,6 @@
         }
     }
 
-    // Toggle Formulaire
     function toggleMairie() {
         const val = document.getElementById('mairieSelect').value;
         document.getElementById('mairieDetails').style.display = (val === 'Oui') ? 'block' : 'none';
@@ -278,7 +276,6 @@
         document.getElementById('houppaDetails').style.display = (val === 'Oui') ? 'block' : 'none';
     }
 
-    // ENVOI SÉCURISÉ
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btnSubmit = document.getElementById('submitBtn');
@@ -287,28 +284,36 @@
         btnSubmit.disabled = true;
         btnSubmit.innerText = "Envoi en cours...";
 
-        const fd = new FormData(this);
-        const params = new URLSearchParams();
-        params.append('nom', fd.get('nom'));
-        params.append('prenom', fd.get('prenom'));
-        params.append('mairie', fd.get('mairie'));
-        params.append('nb_mairie', fd.get('nb_mairie') || "0");
-        params.append('houppa', fd.get('houppa'));
-        params.append('nb_houppa', fd.get('nb_houppa') || "0");
-        params.append('nb_soiree', fd.get('nb_soiree') || "0");
-        params.append('message', fd.get('message') || "");
+        // On lit les valeurs directement par ID pour éviter tout problème avec les champs cachés
+        const nom      = document.getElementById('rsvpForm').querySelector('[name="nom"]').value || '';
+        const prenom   = document.getElementById('rsvpForm').querySelector('[name="prenom"]').value || '';
+        const mairie   = document.getElementById('mairieSelect').value || 'Non';
+        const nb_mairie  = document.getElementById('nb_mairie')  ? document.getElementById('nb_mairie').value  : '0';
+        const houppa   = document.getElementById('houppaSelect').value || 'Non';
+        const nb_houppa  = document.getElementById('nb_houppa')  ? document.getElementById('nb_houppa').value  : '0';
+        const nb_soiree  = document.getElementById('nb_soiree')  ? document.getElementById('nb_soiree').value  : '0';
+        const message  = document.getElementById('rsvpForm').querySelector('[name="message"]').value || '';
 
-        fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: params.toString() })
+        // On envoie via FormData construit manuellement — toujours tous les champs
+        const formData = new FormData();
+        formData.append('nom',       nom);
+        formData.append('prenom',    prenom);
+        formData.append('mairie',    mairie);
+        formData.append('nb_mairie', nb_mairie || '0');
+        formData.append('houppa',    houppa);
+        formData.append('nb_houppa', nb_houppa || '0');
+        formData.append('nb_soiree', nb_soiree || '0');
+        formData.append('message',   message);
+
+        fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
             alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
             this.reset();
-            btnSubmit.disabled = false;
-            btnSubmit.innerText = "Envoyer ma réponse";
             document.getElementById('mairieDetails').style.display = 'none';
             document.getElementById('houppaDetails').style.display = 'none';
         })
-        .catch(() => {
-            alert("Erreur lors de l'envoi.");
+        .catch(() => alert("Erreur lors de l'envoi."))
+        .finally(() => {
             btnSubmit.disabled = false;
             btnSubmit.innerText = "Envoyer ma réponse";
         });
