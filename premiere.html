@@ -66,6 +66,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.25);
             cursor: pointer; z-index: 9999;
             border: 2px solid white;
+            opacity: 0.9;
         }
         #music-control.playing svg { animation: spinMusic 4s linear infinite; }
         @keyframes spinMusic { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -224,6 +225,7 @@
 <footer style="text-align: center; padding-bottom: 60px; font-family: 'Great Vibes'; font-size: 2.2rem; color: var(--gold);">Hâte de vous retrouver !</footer>
 
 <script>
+    // Splash Screen
     window.addEventListener('load', () => {
         setTimeout(() => {
             const splash = document.getElementById('splash-screen');
@@ -232,13 +234,40 @@
         }, 4000);
     });
 
+    // --- MUSIQUE AVEC ACTION SCROLL/TOUCH ---
+    let audioStarted = false;
     const audio = document.getElementById('weddingMusic');
     const btn = document.getElementById('music-control');
+
+    const startAudio = () => {
+        if (!audioStarted) {
+            audio.play().then(() => {
+                audioStarted = true;
+                btn.classList.add('playing');
+                // Nettoyage des listeners
+                window.removeEventListener('scroll', startAudio);
+                window.removeEventListener('touchstart', startAudio);
+                window.removeEventListener('click', startAudio);
+            }).catch(() => {});
+        }
+    };
+
+    window.addEventListener('scroll', startAudio, { passive: true });
+    window.addEventListener('touchstart', startAudio, { passive: true });
+    window.addEventListener('click', startAudio, { passive: true });
+
     function toggleMusic() {
-        if (audio.paused) { audio.play(); btn.classList.add('playing'); }
-        else { audio.pause(); btn.classList.remove('playing'); }
+        if (audio.paused) {
+            audio.play();
+            btn.classList.add('playing');
+            audioStarted = true;
+        } else {
+            audio.pause();
+            btn.classList.remove('playing');
+        }
     }
 
+    // Toggle Formulaire
     function toggleMairie() {
         const val = document.getElementById('mairieSelect').value;
         document.getElementById('mairieDetails').style.display = (val === 'Oui') ? 'block' : 'none';
@@ -249,6 +278,7 @@
         document.getElementById('houppaDetails').style.display = (val === 'Oui') ? 'block' : 'none';
     }
 
+    // ENVOI SÉCURISÉ
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btnSubmit = document.getElementById('submitBtn');
