@@ -278,40 +278,29 @@
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const btnSubmit = document.getElementById('submitBtn');
+    const btn = document.getElementById('submitBtn');
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
     
-    btnSubmit.disabled = true;
-    btnSubmit.innerText = "Envoi en cours...";
+    btn.disabled = true;
+    btn.innerText = "Envoi en cours...";
 
-    // ON RÉCUPÈRE LES VALEURS PAR LEUR ID POUR ÊTRE SURS
     const params = new URLSearchParams();
-    params.append('nom', document.querySelector('input[name="nom"]').value);
-    params.append('prenom', document.querySelector('input[name="prenom"]').value);
-    params.append('mairie', document.getElementById('mairieSelect').value);
-    params.append('nb_mairie', document.getElementById('nb_mairie').value || "0");
-    params.append('houppa', document.getElementById('houppaSelect').value);
-    params.append('nb_houppa', document.getElementById('nb_houppa').value || "0");
-    params.append('nb_soiree', document.getElementById('nb_soiree').value || "0"); // FORCE Nb Soirée
-    params.append('message', document.querySelector('textarea[name="message"]').value || "");
+    params.append('c1', document.querySelector('[name="nom"]').value);
+    params.append('c2', document.querySelector('[name="prenom"]').value);
+    params.append('c3', document.getElementById('mairieSelect').value);
+    params.append('c4', document.getElementById('nb_mairie') ? document.getElementById('nb_mairie').value : "0");
+    params.append('c5', document.getElementById('houppaSelect').value);
+    params.append('c6', document.getElementById('nb_houppa') ? document.getElementById('nb_houppa').value : "0");
+    params.append('c7', document.getElementById('nb_soiree') ? document.getElementById('nb_soiree').value : "0");
+    params.append('c8', document.querySelector('[name="message"]').value);
 
-    fetch(scriptURL, { 
-        method: 'POST', 
-        mode: 'no-cors', // Pour éviter les erreurs de redirection
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString() 
-    })
+    fetch(scriptURL + "?" + params.toString(), { method: 'GET' }) // On utilise GET pour éviter les bugs CORS
     .then(() => {
         alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
         this.reset();
-        document.getElementById('mairieDetails').style.display = 'none';
-        document.getElementById('houppaDetails').style.display = 'none';
+        location.reload(); // On rafraîchit pour nettoyer les champs cachés
     })
-    .catch(() => alert("Erreur réseau, mais la réponse a peut-être été envoyée."))
-    .finally(() => {
-        btnSubmit.disabled = false;
-        btnSubmit.innerText = "Envoyer ma réponse";
-    });
+    .catch(() => alert("Erreur d'envoi."));
 });
 </script>
 </body>
