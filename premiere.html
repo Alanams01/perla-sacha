@@ -284,25 +284,30 @@
     btnSubmit.disabled = true;
     btnSubmit.innerText = "Envoi en cours...";
 
-    // FormData récupère automatiquement TOUS les champs qui ont un attribut "name"
-    const formData = new FormData(this);
+    // ON RÉCUPÈRE LES VALEURS PAR LEUR ID POUR ÊTRE SURS
+    const params = new URLSearchParams();
+    params.append('nom', document.querySelector('input[name="nom"]').value);
+    params.append('prenom', document.querySelector('input[name="prenom"]').value);
+    params.append('mairie', document.getElementById('mairieSelect').value);
+    params.append('nb_mairie', document.getElementById('nb_mairie').value || "0");
+    params.append('houppa', document.getElementById('houppaSelect').value);
+    params.append('nb_houppa', document.getElementById('nb_houppa').value || "0");
+    params.append('nb_soiree', document.getElementById('nb_soiree').value || "0"); // FORCE Nb Soirée
+    params.append('message', document.querySelector('textarea[name="message"]').value || "");
 
     fetch(scriptURL, { 
         method: 'POST', 
-        body: formData 
+        mode: 'no-cors', // Pour éviter les erreurs de redirection
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString() 
     })
-    .then(res => {
-        // Même si Google renvoie une erreur CORS, le "then" s'exécutera car l'envoi est fait
+    .then(() => {
         alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
         this.reset();
         document.getElementById('mairieDetails').style.display = 'none';
         document.getElementById('houppaDetails').style.display = 'none';
     })
-    .catch(err => {
-        // En cas de vrai bug réseau
-        alert("Réponse enregistrée ! (Note: redirection Google ignorée)");
-        this.reset();
-    })
+    .catch(() => alert("Erreur réseau, mais la réponse a peut-être été envoyée."))
     .finally(() => {
         btnSubmit.disabled = false;
         btnSubmit.innerText = "Envoyer ma réponse";
