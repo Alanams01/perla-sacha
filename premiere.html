@@ -276,14 +276,16 @@
         document.getElementById('houppaDetails').style.display = (val === 'Oui') ? 'block' : 'none';
     }
 
-    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+   document.getElementById('rsvpForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
+    // REMPLACE BIEN PAR TON URL DE DÉPLOIEMENT CI-DESSOUS
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
     
     btn.disabled = true;
     btn.innerText = "Envoi en cours...";
 
+    // On prépare les données avec les codes c1, c2... c8
     const params = new URLSearchParams();
     params.append('c1', document.querySelector('[name="nom"]').value);
     params.append('c2', document.querySelector('[name="prenom"]').value);
@@ -294,13 +296,23 @@
     params.append('c7', document.getElementById('nb_soiree') ? document.getElementById('nb_soiree').value : "0");
     params.append('c8', document.querySelector('[name="message"]').value);
 
-    fetch(scriptURL + "?" + params.toString(), { method: 'GET' }) // On utilise GET pour éviter les bugs CORS
+    // On utilise 'no-cors' pour forcer l'envoi sans attendre la réponse de Google
+    fetch(scriptURL + "?" + params.toString(), { 
+        method: 'GET',
+        mode: 'no-cors' 
+    })
     .then(() => {
+        // Avec no-cors, on considère que c'est un succès dès que c'est envoyé
         alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
         this.reset();
-        location.reload(); // On rafraîchit pour nettoyer les champs cachés
+        window.location.reload(); 
     })
-    .catch(() => alert("Erreur d'envoi."));
+    .catch(() => {
+        // En cas de vrai bug réseau
+        alert("Une erreur est survenue, mais vérifiez votre tableau, les données partent souvent quand même.");
+        btn.disabled = false;
+        btn.innerText = "Envoyer ma réponse";
+    });
 });
 </script>
 </body>
