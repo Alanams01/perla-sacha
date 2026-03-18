@@ -247,16 +247,33 @@
         <form id="rsvpForm" class="rsvp-form">
             <label>Nom</label><input type="text" name="nom" required>
             <label>Prénom</label><input type="text" name="prenom" required>
+            
             <label>Présence au Mariage Civil ?</label>
-            <select name="mairie" id="mairieSelect" onchange="togglePersonnes('mairie')" required>
-                <option value="">Sélectionnez...</option><option value="Oui">OUI</option><option value="Non">NON</option>
+            <select name="mairie" id="mairieSelect" onchange="toggleMairieFields()" required>
+                <option value="">Sélectionnez...</option>
+                <option value="Oui">OUI</option>
+                <option value="Non">NON</option>
             </select>
-            <div id="mairiePersonnes" style="display:none;"><label>Nombre de personnes (Mairie)</label><input type="number" name="nb_mairie" min="0" value="0"></div>
+            <div id="mairieDetails" style="display:none;">
+                <label>Nombre de personnes (Mairie)</label>
+                <input type="number" name="nb_mairie" min="0" value="0">
+            </div>
+
             <label>Présence à la Houppa ?</label>
-            <select name="houppa" id="houppaSelect" onchange="togglePersonnes('houppa')" required>
-                <option value="">Sélectionnez...</option><option value="Oui">OUI</option><option value="Non">NON</option>
+            <select name="houppa" id="houppaSelect" onchange="toggleHouppaFields()" required>
+                <option value="">Sélectionnez...</option>
+                <option value="Oui">OUI</option>
+                <option value="Non">NON</option>
             </select>
-            <div id="houppaPersonnes" style="display:none;"><label>Nombre de personnes (Houppa)</label><input type="number" name="nb_houppa" min="0" value="0"></div>
+            
+            <div id="houppaDetails" style="display:none;">
+                <label>Nombre de personnes (Houppa)</label>
+                <input type="number" name="nb_houppa" min="0" value="0">
+                
+                <label>Nombre de personnes (Soirée)</label>
+                <input type="number" name="nb_soiree" min="0" value="0">
+            </div>
+
             <label>Un petit mot pour nous ?</label><textarea name="message" rows="3"></textarea>
             <button type="submit" id="submitBtn" class="btn-submit">Envoyer ma réponse</button>
         </form>
@@ -266,7 +283,6 @@
 <footer style="text-align: center; padding-bottom: 60px; font-family: 'Great Vibes'; font-size: 2.2rem; color: var(--gold);">Hâte de vous retrouver !</footer>
 
 <script>
-    // --- SPLASH SCREEN ---
     window.addEventListener('load', function() {
         setTimeout(function() {
             const splash = document.getElementById('splash-screen');
@@ -275,7 +291,6 @@
         }, 5000); 
     });
 
-    // --- MUSIQUE ---
     let audioStarted = false;
     const audio = document.getElementById('weddingMusic');
     const btn = document.getElementById('music-control');
@@ -307,25 +322,33 @@
         }
     }
 
-    // --- FORMULAIRE ---
-    function togglePersonnes(type) {
-        const select = document.getElementById(type + 'Select');
-        const div = document.getElementById(type + 'Personnes');
-        div.style.display = (select.value === 'Oui') ? 'block' : 'none';
+    // --- FORMULAIRE RÉPONSES ---
+    function toggleMairieFields() {
+        const select = document.getElementById('mairieSelect');
+        const details = document.getElementById('mairieDetails');
+        details.style.display = (select.value === 'Oui') ? 'block' : 'none';
+    }
+
+    function toggleHouppaFields() {
+        const select = document.getElementById('houppaSelect');
+        const details = document.getElementById('houppaDetails');
+        details.style.display = (select.value === 'Oui') ? 'block' : 'none';
     }
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn2 = document.getElementById('submitBtn');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
+        
         btn2.disabled = true;
         btn2.innerText = "Envoi en cours...";
+        
         fetch(scriptURL, { method: 'POST', body: new FormData(this)})
             .then(() => {
                 alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
                 this.reset();
-                document.getElementById('mairiePersonnes').style.display = 'none';
-                document.getElementById('houppaPersonnes').style.display = 'none';
+                document.getElementById('mairieDetails').style.display = 'none';
+                document.getElementById('houppaDetails').style.display = 'none';
             })
             .catch(() => alert("Erreur lors de l'envoi."))
             .finally(() => {
