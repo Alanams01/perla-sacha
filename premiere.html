@@ -71,7 +71,7 @@
             display: block;
         }
 
-        /* --- BOUTON MUSIQUE (style inspiré du code de référence) --- */
+        /* --- BOUTON MUSIQUE --- */
         #music-control {
             position: fixed; bottom: 20px; right: 20px;
             width: 48px; height: 48px;
@@ -154,7 +154,6 @@
     <img src="logo77.png" alt="Logo Grand" class="main-logo-large">
 </div>
 
-<!-- Bouton musique style "référence" avec icône SVG -->
 <div id="music-control" onclick="toggleMusic()">
     <svg viewBox="0 0 24 24" width="22" fill="white">
         <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
@@ -224,14 +223,16 @@
         
         <p style="font-family: 'Cormorant Garamond'; margin-top: 15px; font-style: italic;">Qui aura lieu B"H</p>
         <p class="card-date">Jeudi 25 Juin 2026 à 17h00</p>
-        <p>Au <strong>Salon Hoche</strong><br>9 Avenue Hoche, 75008 Paris</p>
+        <p>Aux <strong>Salons Hoche</strong><br>9 Avenue Hoche, 75008 Paris</p>
+        <p style="font-family: 'Cormorant Garamond'; font-size: 1.1rem; color: var(--plum-light); margin-top: 10px; font-weight: 500;">La cérémonie religieuse sera suivie d'une réception</p>
+        
         <a href="https://www.waze.com/ul?q=9+Avenue+Hoche+Paris" target="_blank" class="btn-waze">Waze</a>
         
         <div class="pensee-section" style="margin-top:25px; border-top:1px solid rgba(0,0,0,0.05); padding-top:15px;">
             <p style="font-family:'Cormorant Garamond'; font-style:italic; font-size:0.95rem; color:var(--plum-light);">Une tendre pensée pour nos chers grands-parents disparus</p>
             <div class="pensee-grid">
-                <div style="text-align: left;">Grand-père Marceau<br>Raoul</div>
-                <div style="text-align: right;">Mémé Suzanne<br>Pépé chouchou</div>
+                <div style="text-align: left;">Mémé Suzanne<br>Pépé chouchou</div>
+                <div style="text-align: right;">Grand-père Marceau<br>Raoul</div>
             </div>
         </div>
         <div class="papa-hommage">
@@ -274,7 +275,7 @@
         }, 5000); 
     });
 
-    // --- MUSIQUE (pattern inspiré du code de référence) ---
+    // --- MUSIQUE ---
     let audioStarted = false;
     const audio = document.getElementById('weddingMusic');
     const btn = document.getElementById('music-control');
@@ -284,7 +285,6 @@
             audio.play().then(() => {
                 audioStarted = true;
                 btn.classList.add('playing');
-                // On retire les listeners une fois la musique lancée
                 window.removeEventListener('scroll', startAudio);
                 window.removeEventListener('touchstart', startAudio);
                 window.removeEventListener('touchmove', startAudio);
@@ -292,9 +292,9 @@
         }
     };
 
-    window.addEventListener('scroll',     startAudio, { passive: true });
+    window.addEventListener('scroll', startAudio, { passive: true });
     window.addEventListener('touchstart', startAudio, { passive: true });
-    window.addEventListener('touchmove',  startAudio, { passive: true });
+    window.addEventListener('touchmove', startAudio, { passive: true });
 
     function toggleMusic() {
         if (audio.paused) {
