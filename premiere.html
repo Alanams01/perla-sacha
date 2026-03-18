@@ -242,8 +242,11 @@
         <h2 class="card-script">Réponses</h2>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <form id="rsvpForm" class="rsvp-form">
-            <label>Nom</label><input type="text" name="nom" required>
-            <label>Prénom</label><input type="text" name="prenom" required>
+            <label>Nom</label>
+            <input type="text" name="nom" autocomplete="family-name" required>
+
+            <label>Prénom</label>
+            <input type="text" name="prenom" autocomplete="given-name" required>
             
             <label>Présence au Mariage Civil ?</label>
             <select name="mairie" id="mairieSelect" onchange="toggleMairieFields()" required>
@@ -338,8 +341,16 @@
         
         btn2.disabled = true;
         btn2.innerText = "Envoi en cours...";
+
+        // Construire manuellement les données pour s'assurer que tous les champs sont toujours envoyés
+        const formData = new FormData(this);
+
+        // Forcer les champs cachés à 0 s'ils sont absents (évite le décalage de colonnes)
+        if (!formData.get('nb_mairie')) formData.set('nb_mairie', '0');
+        if (!formData.get('nb_houppa')) formData.set('nb_houppa', '0');
+        if (!formData.get('nb_soiree')) formData.set('nb_soiree', '0');
         
-        fetch(scriptURL, { method: 'POST', body: new FormData(this)})
+        fetch(scriptURL, { method: 'POST', body: formData })
             .then(() => {
                 alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
                 this.reset();
