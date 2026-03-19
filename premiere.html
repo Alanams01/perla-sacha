@@ -24,6 +24,7 @@
             overflow-x: hidden;
         }
 
+        /* --- SPLASH SCREEN --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -33,6 +34,7 @@
             align-items: center;
             z-index: 10000;
             transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            overflow: hidden;
         }
 
         .splash-logo {
@@ -52,9 +54,33 @@
 
         .splash-fade-out { opacity: 0; pointer-events: none; }
 
+        /* --- LOGOS --- */
         .main-logo-container { width: 100%; display: flex; justify-content: center; padding: 40px 15px; }
         .main-logo-large { max-width: 320px; width: 100%; height: auto; }
 
+        /* --- IMAGE HOUPPA AVEC LOGO --- */
+        .houppa-image-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .logo-on-houppa {
+            position: absolute;
+            width: 110px; /* Agrandit le logo */
+            height: auto;
+            z-index: 5;
+            top: 58%; /* Descend le logo légèrement */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
+        }
+
+        /* --- MUSIQUE --- */
         #music-control {
             position: fixed; bottom: 20px; right: 20px;
             width: 48px; height: 48px;
@@ -84,6 +110,17 @@
         .name-fr { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--plum); line-height: 1; }
         .name-he { font-family: serif; font-size: 1.5rem; color: var(--gold-light); }
 
+        /* MAGEN DAVID SVG STYLE */
+        .magen-david-he {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin: 0 10px;
+            fill: none;
+            stroke: var(--gold-light);
+            stroke-width: 2;
+        }
+
         .btn-waze { 
             display: inline-flex; align-items: center; margin-top: 15px; padding: 10px 30px; 
             border: 1px solid var(--gold-light); border-radius: 50px; color: var(--gold); 
@@ -96,7 +133,7 @@
         }
 
         .proches-grid { display: flex; justify-content: space-between; margin: 20px 0 30px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #444; }
-        .famille-col { width: 48%; text-align: center; }
+        .famille-col { width: 48%; display: flex; flex-direction: column; text-align: center; }
 
         .papa-hommage { margin: 25px 0 10px; padding: 20px 15px; background: rgba(184,134,11,0.04); border-top: 1px solid rgba(184,134,11,0.2); border-bottom: 1px solid rgba(184,134,11,0.2); }
         .pensee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: #777; margin-top: 10px; }
@@ -143,26 +180,34 @@
     </div>
 
     <div class="card">
-        <img src="houppa.png" class="card-inner-image">
+        <div class="houppa-image-container">
+            <img src="houppa.png" class="card-inner-image">
+            <img src="logo77.png" alt="Logo" class="logo-on-houppa">
+        </div>
         <h2 class="card-script">Houppa</h2>
         <div class="proches-grid">
             <div class="famille-col">
-                <p>Betty et Jean Claude Sebbah</p>
+                <p>Betty et Jean Claude</p>
+                <span style="font-weight: 600;">Sebbah</span>
                 <p>Kathia Sebbah</p>
             </div>
             <div class="famille-col">
                 <p>Evelyne Chaouat</p>
                 <p>Caroline Chaouat</p>
                 <p>Jacqueline Benyounes</p>
-                <p>Nathalie et Philippe Benyounes</p>
+                <p>Nathalie et Philippe</p>
+                <span style="font-weight: 600;">Benyounes</span>
             </div>
         </div>
         <p style="font-family: 'Cormorant Garamond'; font-style: italic; color: #666; margin-bottom: 15px;">Ont l'immense joie de vous faire part du mariage de leurs petits-enfants et enfants</p>
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <p class="name-fr">Perla & Sacha</p>
-        <div style="margin: 10px 0;">
+        <div style="display: flex; align-items: center; justify-content: center; margin: 10px 0;">
             <span class="name-he">פרלה</span> 
-            <span style="color:var(--gold-light); margin:0 10px;">✡</span>
+            <svg class="magen-david-he" viewBox="0 0 100 100">
+                <path d="M50 5 L90 75 L10 75 Z" />
+                <path d="M50 95 L10 25 L90 25 Z" />
+            </svg>
             <span class="name-he">אברהם</span>
         </div>
         <p class="card-date">Jeudi 25 Juin 2026 à 17h00</p>
@@ -189,11 +234,9 @@
         <div class="sep"><span></span><div class="sep-diamond"></div><span></span></div>
         <form id="rsvpForm" class="rsvp-form">
             <label>Nom</label>
-            <input type="text" name="nom" autocomplete="family-name" required>
-
+            <input type="text" name="nom" required>
             <label>Prénom</label>
-            <input type="text" name="prenom" autocomplete="given-name" required>
-            
+            <input type="text" name="prenom" required>
             <label>Présence au Mariage Civil ?</label>
             <select name="mairie" id="mairieSelect" onchange="toggleMairie()" required>
                 <option value="Non">NON</option>
@@ -203,7 +246,6 @@
                 <label>Nombre de personnes (Mairie)</label>
                 <input type="number" name="nb_mairie" id="nb_mairie" min="0" value="0">
             </div>
-
             <label>Présence à la Houppa & Soirée ?</label>
             <select name="houppa" id="houppaSelect" onchange="toggleHouppa()" required>
                 <option value="Non">NON</option>
@@ -213,7 +255,6 @@
                 <label>Nombre de personnes (Houppa & Soirée)</label>
                 <input type="number" name="nb_houppa" id="nb_houppa" min="0" value="0">
             </div>
-
             <label>Un petit mot pour nous ?</label>
             <textarea name="message" rows="3"></textarea>
             <button type="submit" id="submitBtn" class="btn-submit">Envoyer ma réponse</button>
@@ -243,14 +284,14 @@
                 btn.classList.add('playing');
                 window.removeEventListener('scroll', startAudio);
                 window.removeEventListener('touchstart', startAudio);
-                window.removeEventListener('click', startAudio);
+                window.removeEventListener('mousedown', startAudio);
             }).catch(() => {});
         }
     };
 
     window.addEventListener('scroll', startAudio, { passive: true });
     window.addEventListener('touchstart', startAudio, { passive: true });
-    window.addEventListener('click', startAudio, { passive: true });
+    window.addEventListener('mousedown', startAudio, { passive: true });
 
     function toggleMusic() {
         if (audio.paused) {
@@ -281,24 +322,8 @@
         btnSubmit.disabled = true;
         btnSubmit.innerText = "Envoi en cours...";
 
-        const params = new URLSearchParams();
-        params.append('nom', document.getElementsByName('nom')[0].value);
-        params.append('prenom', document.getElementsByName('prenom')[0].value);
-        params.append('mairie', document.getElementById('mairieSelect').value);
-        params.append('nb_mairie', document.getElementById('nb_mairie') ? document.getElementById('nb_mairie').value : '0');
-        params.append('houppa', document.getElementById('houppaSelect').value);
-        params.append('nb_houppa', document.getElementById('nb_houppa') ? document.getElementById('nb_houppa').value : '0');
-        // On envoie '0' pour nb_soiree afin de ne pas casser le script Google Sheets qui attend une colonne, 
-        // ou vous pouvez le supprimer si vous avez modifié votre script .gs
-        params.append('nb_soiree', '0'); 
-        params.append('message', document.getElementsByName('message')[0].value);
-
-        fetch(scriptURL, { 
-            method: 'POST', 
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: params.toString() 
-        })
+        const formData = new FormData(this);
+        fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
             alert("Merci ! Votre réponse a bien été enregistrée. Mazal Tov !");
             this.reset();
