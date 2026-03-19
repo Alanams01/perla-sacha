@@ -71,10 +71,10 @@
         }
         .logo-on-houppa {
             position: absolute;
-            width: 110px; /* Agrandit le logo */
+            width: 110px;
             height: auto;
             z-index: 5;
-            top: 58%; /* Descend le logo légèrement */
+            top: 58%; 
             left: 50%;
             transform: translate(-50%, -50%);
             filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
@@ -110,15 +110,9 @@
         .name-fr { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--plum); line-height: 1; }
         .name-he { font-family: serif; font-size: 1.5rem; color: var(--gold-light); }
 
-        /* MAGEN DAVID SVG STYLE */
         .magen-david-he {
-            width: 24px;
-            height: 24px;
-            vertical-align: middle;
-            margin: 0 10px;
-            fill: none;
-            stroke: var(--gold-light);
-            stroke-width: 2;
+            width: 24px; height: 24px; vertical-align: middle; margin: 0 10px;
+            fill: none; stroke: var(--gold-light); stroke-width: 2;
         }
 
         .btn-waze { 
@@ -237,24 +231,37 @@
             <input type="text" name="nom" required>
             <label>Prénom</label>
             <input type="text" name="prenom" required>
+
             <label>Présence au Mariage Civil ?</label>
-            <select name="mairie" id="mairieSelect" onchange="toggleMairie()" required>
+            <select name="mairie" id="mairieSelect" onchange="toggleField('mairieSelect', 'mairieDetails')" required>
                 <option value="Non">NON</option>
                 <option value="Oui">OUI</option>
             </select>
             <div id="mairieDetails" style="display:none; margin-top:10px;">
                 <label>Nombre de personnes (Mairie)</label>
-                <input type="number" name="nb_mairie" id="nb_mairie" min="0" value="0">
+                <input type="number" name="nb_mairie" min="0" value="0">
             </div>
-            <label>Présence à la Houppa & Soirée ?</label>
-            <select name="houppa" id="houppaSelect" onchange="toggleHouppa()" required>
+
+            <label>Présence à la Houppa ?</label>
+            <select name="houppa" id="houppaSelect" onchange="toggleField('houppaSelect', 'houppaDetails')" required>
                 <option value="Non">NON</option>
                 <option value="Oui">OUI</option>
             </select>
             <div id="houppaDetails" style="display:none; margin-top:10px;">
-                <label>Nombre de personnes (Houppa & Soirée)</label>
-                <input type="number" name="nb_houppa" id="nb_houppa" min="0" value="0">
+                <label>Nombre de personnes (Houppa)</label>
+                <input type="number" name="nb_houppa" min="0" value="0">
             </div>
+
+            <label>Présence à la Soirée ?</label>
+            <select name="soiree" id="soireeSelect" onchange="toggleField('soireeSelect', 'soireeDetails')" required>
+                <option value="Non">NON</option>
+                <option value="Oui">OUI</option>
+            </select>
+            <div id="soireeDetails" style="display:none; margin-top:10px;">
+                <label>Nombre de personnes (Soirée)</label>
+                <input type="number" name="nb_soiree" min="0" value="0">
+            </div>
+
             <label>Un petit mot pour nous ?</label>
             <textarea name="message" rows="3"></textarea>
             <button type="submit" id="submitBtn" class="btn-submit">Envoyer ma réponse</button>
@@ -297,27 +304,21 @@
         if (audio.paused) {
             audio.play();
             btn.classList.add('playing');
-            audioStarted = true;
         } else {
             audio.pause();
             btn.classList.remove('playing');
         }
     }
 
-    function toggleMairie() {
-        const val = document.getElementById('mairieSelect').value;
-        document.getElementById('mairieDetails').style.display = (val === 'Oui') ? 'block' : 'none';
-    }
-
-    function toggleHouppa() {
-        const val = document.getElementById('houppaSelect').value;
-        document.getElementById('houppaDetails').style.display = (val === 'Oui') ? 'block' : 'none';
+    function toggleField(selectId, divId) {
+        const val = document.getElementById(selectId).value;
+        document.getElementById(divId).style.display = (val === 'Oui') ? 'block' : 'none';
     }
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btnSubmit = document.getElementById('submitBtn');
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzrAnslnZH14rNYl1m3RvuPxSmtpHNOElqWVOBiiMRKI0Jq_XLcRous-KO2Iq-RnXs/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwegucjwWqatHwPh3HwaSPw8QockAw4BTYCIaTdrKv6Uup9Kv3BY-2xcS_FB22g7osI/exec';
         
         btnSubmit.disabled = true;
         btnSubmit.innerText = "Envoi en cours...";
@@ -331,6 +332,7 @@
             btnSubmit.innerText = "Envoyer ma réponse";
             document.getElementById('mairieDetails').style.display = 'none';
             document.getElementById('houppaDetails').style.display = 'none';
+            document.getElementById('soireeDetails').style.display = 'none';
         })
         .catch(() => {
             alert("Erreur lors de l'envoi.");
